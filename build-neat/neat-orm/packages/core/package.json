@@ -1,0 +1,153 @@
+{
+  "name": "@neat-orm/core",
+  "version": "0.1.0",
+  "description": "Core package for NeatOrm - Enterprise TypeScript ORM with compile-time type safety and zero circular dependencies",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./decorators": {
+      "import": {
+        "types": "./dist/decorators/index.d.ts",
+        "default": "./dist/decorators/index.js"
+      }
+    },
+    "./entity": {
+      "import": {
+        "types": "./dist/entity/index.d.ts",
+        "default": "./dist/entity/index.js"
+      }
+    },
+    "./query-builder": {
+      "import": {
+        "types": "./dist/query-builder/index.d.ts",
+        "default": "./dist/query-builder/index.js"
+      }
+    },
+    "./relations": {
+      "import": {
+        "types": "./dist/relations/index.d.ts",
+        "default": "./dist/relations/index.js"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/types/index.js"
+      }
+    },
+    "./adapters": {
+      "import": {
+        "types": "./dist/adapters/index.d.ts",
+        "default": "./dist/adapters/index.js"
+      }
+    },
+    "./migrations": {
+      "import": {
+        "types": "./dist/migrations/index.d.ts",
+        "default": "./dist/migrations/index.js"
+      }
+    },
+    "./transactions": {
+      "import": {
+        "types": "./dist/transactions/index.d.ts",
+        "default": "./dist/transactions/index.js"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
+  },
+  "keywords": [
+    "typescript",
+    "orm",
+    "database",
+    "sql",
+    "type-safe",
+    "compile-time-validation",
+    "decorators",
+    "entity",
+    "repository",
+    "query-builder",
+    "migrations",
+    "transactions",
+    "postgresql",
+    "mysql",
+    "sqlite",
+    "zero-circular-dependencies",
+    "neat-framework"
+  ],
+  "author": "Neat Framework Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neat-framework/neat-orm.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/neat-framework/neat-orm/issues"
+  },
+  "homepage": "https://github.com/neat-framework/neat-orm#readme",
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "peerDependencies": {
+    "reflect-metadata": "^0.2.0"
+  },
+  "peerDependenciesMeta": {
+    "reflect-metadata": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "pg": "^8.13.0",
+    "mysql2": "^3.11.0",
+    "better-sqlite3": "^11.5.0",
+    "mssql": "^10.0.2"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0",
+    "@types/mysql2": "^3.0.0",
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^22.0.0",
+    "reflect-metadata": "^0.2.0",
+    "typescript": "^5.7.0",
+    "rimraf": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
+

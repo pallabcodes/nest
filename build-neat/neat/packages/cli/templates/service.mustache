@@ -1,0 +1,46 @@
+import { Injectable } from '@neat/core';
+
+@Injectable()
+export class {{serviceName}} {
+
+  /**
+   * Find all items
+   */
+  findAll(): any[] {
+    return [];
+  }
+
+  /**
+   * Find item by ID
+   */
+  findById(id: string | number): any | null {
+    return null;
+  }
+
+  /**
+   * Create new item
+   */
+  create(data: any): any {
+    return {
+      id: Date.now(),
+      ...data,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+  }
+
+  /**
+   * Update existing item
+   */
+  update(id: string | number, data: any): any | null {
+    return null;
+  }
+
+  /**
+   * Delete item
+   */
+  delete(id: string | number): boolean {
+    return false;
+  }
+}
+

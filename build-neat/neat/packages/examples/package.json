@@ -1,0 +1,37 @@
+{
+  "name": "@neat/examples",
+  "version": "1.0.0",
+  "description": "Comprehensive examples demonstrating Neat framework usage patterns",
+  "private": true,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "demo:simple": "npx tsx simple-neat.ts",
+    "demo:http": "npx tsx http-middleware-neat.ts",
+    "demo:database": "npx tsx database-neat.ts",
+    "demo:all": "npm run demo:simple && npm run demo:http && npm run demo:database"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.0"
+  },
+  "keywords": [
+    "neat",
+    "framework",
+    "examples",
+    "typescript",
+    "decorators",
+    "dependency-injection",
+    "strategy-pattern"
+  ],
+  "author": "Neat Framework",
+  "license": "MIT"
+}

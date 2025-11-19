@@ -1,0 +1,40 @@
+{
+  "name": "@neat-orm/mongodb",
+  "version": "0.1.0-beta.1",
+  "description": "MongoDB support for NeatORM - Production-grade NoSQL integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "orm",
+    "mongodb",
+    "nosql",
+    "typescript",
+    "database",
+    "neat-orm"
+  ],
+  "author": "Neat Framework Team",
+  "license": "MIT",
+  "dependencies": {
+    "@neat-orm/core": "workspace:*",
+    "mongodb": "^6.3.0"
+  },
+  "peerDependencies": {
+    "reflect-metadata": "^0.1.13 || ^0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
+

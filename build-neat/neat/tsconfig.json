@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Neat Framework - Root TypeScript Configuration",
+
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+
+    /* JavaScript Support */
+    "allowJs": false,
+    "checkJs": false,
+    "maxNodeModuleJsDepth": 0,
+
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "sourceMap": true,
+    "removeComments": false,
+    "importHelpers": false,
+    "downlevelIteration": false,
+    "newLine": "lf",
+    "stripInternal": true,
+
+    /* Interop Constraints */
+    "isolatedModules": true,
+    "allowImportingTsExtensions": false,
+    "moduleDetection": "force",
+
+    /* Projects */
+    "incremental": true,
+    "composite": false,
+    "tsBuildInfoFile": ".tsbuildinfo",
+
+    /* Completeness */
+    "skipLibCheck": false,
+    "skipDefaultLibCheck": false,
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+
+    /* Additional Checks */
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+
+    /* Module Resolution */
+    "baseUrl": ".",
+    "paths": {
+      "@neat/core": ["packages/core/src"],
+      "@neat/core/*": ["packages/core/src/*"]
+    },
+
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Advanced Options */
+    "useDefineForClassFields": true,
+    "preserveWatchOutput": true,
+
+    /* Output Formatting */
+    "noErrorTruncation": true,
+    "pretty": true
+
+    /* Backwards Compatibility */
+  },
+
+  "include": [
+    "packages/*/src/**/*",
+    "packages/*/examples/**/*"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "packages/*/dist",
+    "packages/*/node_modules",
+    "packages/*/*.tsbuildinfo",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.d.ts"
+  ],
+
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}

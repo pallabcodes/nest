@@ -1,0 +1,72 @@
+{
+  "name": "@neat-orm/cli",
+  "version": "0.1.0",
+  "description": "CLI tools for NeatOrm - Enterprise TypeScript ORM",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "neat-orm": "./bin/neat-orm.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "typescript",
+    "orm",
+    "cli",
+    "migrations",
+    "database",
+    "schema",
+    "enterprise"
+  ],
+  "author": "Neat Framework Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neat-framework/neat-orm.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/neat-framework/neat-orm/issues"
+  },
+  "homepage": "https://github.com/neat-framework/neat-orm#readme",
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@neat-orm/core": "workspace:*",
+    "commander": "^12.0.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.1",
+    "inquirer": "^9.2.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.0",
+    "dotenv": "^16.4.0",
+    "reflect-metadata": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/fs-extra": "^11.0.0",
+    "@types/glob": "^8.1.0",
+    "@types/inquirer": "^9.0.0",
+    "typescript": "^5.7.0",
+    "rimraf": "^5.0.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

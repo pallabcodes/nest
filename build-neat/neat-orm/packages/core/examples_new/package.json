@@ -1,0 +1,27 @@
+{
+  "name": "@neat-orm/examples-clean",
+  "version": "0.1.0",
+  "description": "Clean, working examples for NeatORM - built from scratch",
+  "private": true,
+  "scripts": {
+    "start:simple": "tsx simple-start.ts",
+    "start:basic": "tsx basic-crud.ts",
+    "start:transactions": "tsx transactions-demo.ts",
+    "start:advanced": "tsx advanced-queries.ts",
+    "start:sqlserver": "tsx sqlserver-example.ts",
+    "start:cte": "tsx advanced-cte-example.ts",
+    "start:plugins": "tsx plugin-system-example.ts",
+    "start:telescope": "tsx telescope-example.ts"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.6",
+    "better-sqlite3": "^11.5.0",
+    "mssql": "^10.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

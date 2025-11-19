@@ -1,0 +1,99 @@
+{
+  "name": "@neat/auth",
+  "version": "1.0.0",
+  "description": "Zero-configuration authentication and authorization for Neat Framework with JWT, OAuth, and role-based access control",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "build:watch": "tsc --project tsconfig.json --watch",
+    "clean": "rimraf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "authentication",
+    "authorization",
+    "jwt",
+    "oauth",
+    "security",
+    "typescript",
+    "framework",
+    "zero-boilerplate",
+    "auto-discovery",
+    "neat-framework"
+  ],
+  "author": "Neat Framework Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neat-framework/neat.git",
+    "directory": "packages/auth"
+  },
+  "bugs": {
+    "url": "https://github.com/neat-framework/neat/issues"
+  },
+  "homepage": "https://github.com/neat-framework/neat#readme",
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@neat/core": "^1.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "bcryptjs": "^2.4.3",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-github2": "^0.1.12",
+    "passport-facebook": "^3.0.0",
+    "passport-twitter": "^1.0.4",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/bcryptjs": "^2.4.3",
+    "@types/passport": "^1.0.0",
+    "@types/passport-jwt": "^3.0.0",
+    "@types/passport-google-oauth20": "^2.0.0",
+    "@types/passport-github2": "^1.2.5",
+    "@types/passport-facebook": "^3.0.0",
+    "@types/passport-twitter": "^1.0.5",
+    "@types/passport-local": "^1.0.35",
+    "tsx": "^4.7.0",
+    "rimraf": "^5.0.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0"
+  },
+  "peerDependencies": {
+    "@neat/core": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
