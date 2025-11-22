@@ -1,125 +1,159 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS SaaS Boilerplate
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A minimal, interview-ready NestJS boilerplate with authentication and user management. Perfect for SaaS applications.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Quick Start
 
-# NestJS TypeScript MVC Project
-
-This project was scaffolded using the NestJS CLI with TypeScript and follows the MVC pattern.
-
-## Getting Started
-
-### Install dependencies
 ```bash
 npm install
+npm run docker:up      # Start MySQL + Redis
+npm run db:setup       # Run migrations + seed data
+npm run dev            # Start development server
 ```
 
-### Run the development server
-```bash
-npm run start
+API will be available at `http://localhost:8000/api`
+
+## 📁 What's Included
+
+- **Auth Module**: JWT authentication, OTP verification, password reset
+- **User Module**: User CRUD operations with role-based access
+- **Database**: Sequelize ORM with MySQL (PostgreSQL supported)
+- **Guards**: Placeholder files (implement during interview)
+- **3-Layer Architecture**: Controller → Service → Repository
+
+## 🎯 Boilerplate Philosophy
+
+- **Infrastructure First**: All setup code is written and working
+- **Business Logic**: Services/repositories have TODO comments (not implemented)
+- **Guards**: Placeholder `.md` files - implement during interview
+- **Clean Base**: Remove boilerplate comments with `npm run remove:boilerplate`
+
+## 🔧 Environment Setup
+
+Create `.env` file:
+
+```env
+NODE_ENV=development
+PORT=8000
+
+# Database
+DB_DIALECT=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=password
+DB_NAME=boilerplate_db
+
+# JWT
+JWT_SECRET=your-secret-change-in-production
+JWT_ACCESS_EXPIRATION=15m
+JWT_REFRESH_EXPIRATION=7d
 ```
 
-### Run tests
-```bash
-npm run test
+## 📝 Implementation Guide
+
+1. **Guards**: Implement `JwtAuthGuard` and `RolesGuard` in placeholder files
+2. **Services**: Replace TODO comments with actual implementations
+3. **Features**: Add new modules using `npm run generate:module`
+4. **Cleanup**: Run `npm run remove:boilerplate` to remove TODO comments
+
+## 🏗️ Architecture
+
 ```
+Controller → Service → Repository → Database
+    ↓         ↓         ↓
+   HTTP    Business   Data Access
+ Response   Logic      Layer
+```
+
+## 🛠️ Available Scripts
+
+```bash
+npm run dev              # Start with Docker
+npm run dev:standalone   # Start without Docker
+npm run db:setup         # Run migrations + seeds
+npm run remove:boilerplate # Remove TODO comments
+npm run generate:module  # Create new module
+```
+
+## Common Commands
+
+```bash
+npm run dev              # Start with Docker (easiest)
+npm run dev:standalone   # Start without Docker (needs local DB running)
+npm run db:setup         # Run migrations + seed data
+npm run fresh            # Nuclear option - drops everything and starts fresh
+npm run docker:up        # Start Docker services
+npm run docker:down      # Stop Docker services
+```
+
+## API Docs
+
+Once it's running:
+- Swagger UI: http://localhost:8000/api-docs
+- Postman collection: `postman/sandbox.postman_collection.json` (import it, set `baseUrl` variable)
+
+Test accounts (from seeders):
+- `demo@example.com` / `demo123`
+- `admin@example.com` / `Password123!`
 
 ## Project Structure
-- `src/` contains controllers, modules, and services.
-- `main.ts` is the entry point.
 
-For more details, see [NestJS documentation](https://docs.nestjs.com/).
+Pretty standard NestJS structure:
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
+```
+src/
+├── common/          # Shared utilities (guards, filters, interceptors, mappers)
+├── config/          # App config
+├── database/        # Sequelize models, migrations, seeders
+└── modules/         # Feature modules (auth, user, product, student, teacher, course, department)
 ```
 
-## Compile and run the project
+Each module follows the same pattern: controller → service → repository → mapper. Keeps things consistent.
+
+## Testing
+
+There are shell scripts in the root for testing endpoints. They're basic but work:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+./test-all-endpoints.sh
+./test-auth.sh
+./test-product.sh
+# etc...
 ```
 
-## Run tests
+## Documentation
 
+I wrote up a couple guides:
+
+- **[Sequelize Associations Guide](./scripts/SEQUELIZE_ASSOCIATIONS_GUIDE.md)** - Everything about Sequelize relationships. Got tired of looking this up, so I documented it all.
+- **[Response Handling Explained](./scripts/RESPONSE_HANDLING_EXPLAINED.md)** - How the mappers work and why we don't use `@Res()`. Someone asked about this, so I wrote it down.
+
+## Tech Stack
+
+NestJS 11, TypeScript, Sequelize, MySQL/PostgreSQL, Redis (for queues), JWT auth, Swagger docs.
+
+## Troubleshooting
+
+**Database connection issues?**
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run check:services  # Checks if Docker services are up
+docker-compose logs mysql  # Check what's happening
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+**Want to start completely fresh?**
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run fresh  # Drops DB, recreates, migrates, seeds
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**Port 8000 already in use?**
+Change `PORT` in `.env` or kill whatever's using it: `lsof -ti:8000 | xargs kill -9`
 
-## Resources
+## Why This Exists
 
-Check out a few resources that may come in handy when working with NestJS:
+This is my sandbox project. I use it to:
+- Try out new patterns before using them in real projects
+- Reference when I forget how to do something
+- Show examples of clean architecture, response mappers, complex Sequelize queries, transactions, etc.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Feel free to use it the same way. The code shows how I structure things - mappers instead of `@Res()`, proper separation of concerns, that kind of stuff.

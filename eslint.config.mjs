@@ -6,7 +6,18 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: [
+      'eslint.config.mjs',
+      'dist/**',
+      'node_modules/**',
+      'build/**',
+      'coverage/**',
+      '*.config.js',
+      '*.config.mjs',
+      'scripts/**',
+      'migrations/**',
+      'seeders/**',
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -26,9 +37,129 @@ export default tseslint.config(
   },
   {
     rules: {
+      // =============================================================================
+      // TypeScript Type Safety
+      // =============================================================================
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-call': 'warn',
+      '@typescript-eslint/no-unsafe-member-access': 'warn',
+      '@typescript-eslint/no-unsafe-return': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/require-await': 'warn',
+      '@typescript-eslint/return-await': 'error',
+
+      // =============================================================================
+      // Code Quality
+      // =============================================================================
+      'no-console': 'warn',
+      'no-debugger': 'error',
+      'no-alert': 'error',
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'no-new-func': 'error',
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'prefer-arrow-callback': 'error',
+      'object-shorthand': 'error',
+      'prefer-template': 'error',
+      'no-duplicate-imports': 'error',
+      'no-unused-expressions': 'error',
+      'no-unreachable': 'error',
+      'no-constant-condition': 'error',
+      'no-empty': 'warn',
+      'no-extra-semi': 'error',
+      'no-irregular-whitespace': 'error',
+      'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
+      'no-trailing-spaces': 'error',
+      'no-else-return': 'warn',
+      'prefer-destructuring': ['warn', { object: true, array: false }],
+
+      // =============================================================================
+      // Best Practices
+      // =============================================================================
+      'eqeqeq': ['error', 'always', { null: 'ignore' }],
+      'curly': ['error', 'all'],
+      'default-case': 'warn',
+      'default-case-last': 'error',
+      'no-fallthrough': 'error',
+      'no-implicit-coercion': 'error',
+      'no-return-await': 'off',
+      'require-await': 'off',
+      'no-throw-literal': 'error',
+      'prefer-promise-reject-errors': 'error',
+
+      // =============================================================================
+      // Size and Complexity Limits
+      // =============================================================================
+      'max-lines': ['error', { max: 200, skipBlankLines: true, skipComments: true }],
+      'max-lines-per-function': ['error', { max: 50, skipBlankLines: true, skipComments: true }],
+      'complexity': ['error', { max: 15 }],
+      'max-depth': ['error', { max: 5 }],
+      'max-params': ['warn', { max: 5 }],
+    },
+  },
+  {
+    files: ['**/*.js'],
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+  {
+    files: ['**/*.spec.ts', '**/*.test.ts'],
+    rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn'
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      'no-console': 'off',
+    },
+  },
+  // Files exempt from size limits
+  {
+    files: [
+      '**/migrations/**/*.js',
+      '**/seeders/**/*.js',
+      '**/database/examples/**/*.ts',
+      '**/BEFORE_AFTER_EXAMPLES.ts',
+      '**/types/**/*.d.ts',
+      '**/utils/date.util.ts',
+    ],
+    rules: {
+      'max-lines': 'off',
+      'max-lines-per-function': 'off',
+    },
+  },
+  // Example files and documentation
+  {
+    files: [
+      '**/examples/**/*.ts',
+      '**/BEFORE_AFTER_EXAMPLES.ts',
+      '**/*.md',
+    ],
+    rules: {
+      'no-console': 'off',
+      'max-lines': 'off',
+      'max-lines-per-function': 'off',
+      complexity: 'off',
     },
   },
 );
