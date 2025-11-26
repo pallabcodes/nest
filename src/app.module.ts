@@ -25,7 +25,7 @@ import configuration from './config/configuration';
     CacheModule,
     HealthModule,
     DatabaseModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

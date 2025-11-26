@@ -1,21 +1,14 @@
 import { NestFactory } from '@nestjs/core';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { Bootstrap } from '@common/bootstrap/app-bootstrap';
 
-/**
- * Application Bootstrap Class
- * Encapsulates the complete startup process in a structured, testable way
- */
-class BootStrap {
-  /**
-   * Main application bootstrap method
-   * Orchestrates the entire application startup process with proper error handling
-   */
+class StartupApplication {
   static async start(): Promise<void> {
     try {
-      // Create the NestJS application instance
-      const app = await NestFactory.create(AppModule);
+      // Create the NestJS application instance using Fastify http adapter
+      const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
       const configService = app.get(ConfigService);
 
       // Initialize the bootstrap class with dependency injection
@@ -40,4 +33,4 @@ class BootStrap {
 }
 
 // Start the application
-void BootStrap.start();
+void StartupApplication.start();

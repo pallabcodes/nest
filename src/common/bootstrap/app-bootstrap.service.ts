@@ -49,25 +49,23 @@ export class AppBootstrapService {
   }
 
   private setupSecurityMiddleware(): void {
-    const expressApp = this.app.getHttpAdapter().getInstance();
-
-    // Apply security middleware to all routes
-    expressApp.use((req: any, res: any, next: any) => {
+    this.app.use((req: any, res: any, next: any) => {
       const securityMiddleware = new SecurityMiddleware(this.configService);
       securityMiddleware.use(req, res, next);
     });
 
-    // Apply correlation ID middleware
-    expressApp.use((req: any, res: any, next: any) => {
+    this.app.use((req: any, res: any, next: any) => {
       const correlationMiddleware = new CorrelationIdMiddleware();
       correlationMiddleware.use(req, res, next);
     });
   }
 
   private setupViewEngine(): void {
-    // Register EJS view engine (minimal setup)
-    const expressApp = this.app.getHttpAdapter().getInstance();
-    expressApp.set('view engine', 'ejs');
+    const httpAdapter = this.app.getHttpAdapter();
+    if (httpAdapter.getType() === 'express') {
+      const expressApp = httpAdapter.getInstance();
+      expressApp.set('view engine', 'ejs');
+    }
   }
 
   private setupGlobalPipes(): void {
