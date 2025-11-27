@@ -7,11 +7,11 @@ import {
   UpdatedAt,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { User } from './user.model';
-import { UserRole } from './user-role.model';
+import { Teacher } from './teacher.model';
+import { TeacherDepartment } from './teacher-department.model';
 
 @Table({
-  tableName: 'roles',
+  tableName: 'departments',
   timestamps: true,
   indexes: [
     {
@@ -23,7 +23,7 @@ import { UserRole } from './user-role.model';
     },
   ],
 })
-export class Role extends Model<Role> {
+export class Department extends Model<Department> {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -36,26 +36,16 @@ export class Role extends Model<Role> {
     allowNull: false,
     unique: true,
     validate: {
-      len: [1, 100],
+      len: [1, 255],
     },
   })
   name: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     allowNull: true,
-    validate: {
-      len: [0, 500],
-    },
   })
   description: string;
-
-  @Column({
-    type: DataType.JSON,
-    allowNull: true,
-    comment: 'Optional permissions metadata (e.g., ["users:read", "users:write"])',
-  })
-  permissions: string[];
 
   @Column({
     type: DataType.BOOLEAN,
@@ -69,12 +59,13 @@ export class Role extends Model<Role> {
   @UpdatedAt
   declare updatedAt: Date;
 
-  // Many-to-Many association with User through UserRole
-  @BelongsToMany(() => User, {
-    through: () => UserRole,
-    foreignKey: 'roleId',
-    otherKey: 'userId',
-    as: 'users',
+  @BelongsToMany(() => Teacher, {
+    through: () => TeacherDepartment,
+    foreignKey: 'departmentId',
+    otherKey: 'teacherId',
+    as: 'teachers',
   })
-  users: User[];
+  teachers: Teacher[];
 }
+
+

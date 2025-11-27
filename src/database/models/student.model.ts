@@ -7,23 +7,26 @@ import {
   UpdatedAt,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { User } from './user.model';
-import { UserRole } from './user-role.model';
+import { Course } from './course.model';
+import { Enrollment } from './enrollment.model';
 
 @Table({
-  tableName: 'roles',
+  tableName: 'students',
   timestamps: true,
   indexes: [
     {
-      fields: ['name'],
+      fields: ['email'],
       unique: true,
     },
     {
       fields: ['isActive'],
     },
+    {
+      fields: ['studentId'],
+    },
   ],
 })
-export class Role extends Model<Role> {
+export class Student extends Model<Student> {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -34,28 +37,39 @@ export class Role extends Model<Role> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
     validate: {
-      len: [1, 100],
+      len: [1, 255],
     },
   })
   name: string;
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
+    unique: true,
     validate: {
-      len: [0, 500],
+      isEmail: true,
     },
   })
-  description: string;
+  email: string;
 
   @Column({
-    type: DataType.JSON,
+    type: DataType.STRING,
     allowNull: true,
-    comment: 'Optional permissions metadata (e.g., ["users:read", "users:write"])',
   })
-  permissions: string[];
+  phone: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  studentId: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  dateOfBirth: Date;
 
   @Column({
     type: DataType.BOOLEAN,
@@ -69,12 +83,13 @@ export class Role extends Model<Role> {
   @UpdatedAt
   declare updatedAt: Date;
 
-  // Many-to-Many association with User through UserRole
-  @BelongsToMany(() => User, {
-    through: () => UserRole,
-    foreignKey: 'roleId',
-    otherKey: 'userId',
-    as: 'users',
+  @BelongsToMany(() => Course, {
+    through: () => Enrollment,
+    foreignKey: 'studentId',
+    otherKey: 'courseId',
+    as: 'courses',
   })
-  users: User[];
+  courses: Course[];
 }
+
+

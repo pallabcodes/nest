@@ -5,13 +5,14 @@ import {
   DataType,
   CreatedAt,
   UpdatedAt,
+  HasMany,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { User } from './user.model';
-import { UserRole } from './user-role.model';
+import { Player } from './player.model';
+import { Quotation } from './quotation.model';
 
 @Table({
-  tableName: 'roles',
+  tableName: 'teams',
   timestamps: true,
   indexes: [
     {
@@ -23,7 +24,7 @@ import { UserRole } from './user-role.model';
     },
   ],
 })
-export class Role extends Model<Role> {
+export class Team extends Model<Team> {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -35,30 +36,18 @@ export class Role extends Model<Role> {
     type: DataType.STRING,
     allowNull: false,
     unique: true,
-    validate: {
-      len: [1, 100],
-    },
   })
   name: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    validate: {
-      len: [0, 500],
-    },
   })
-  description: string;
-
-  @Column({
-    type: DataType.JSON,
-    allowNull: true,
-    comment: 'Optional permissions metadata (e.g., ["users:read", "users:write"])',
-  })
-  permissions: string[];
+  city: string;
 
   @Column({
     type: DataType.BOOLEAN,
+    allowNull: false,
     defaultValue: true,
   })
   isActive: boolean;
@@ -69,12 +58,23 @@ export class Role extends Model<Role> {
   @UpdatedAt
   declare updatedAt: Date;
 
-  // Many-to-Many association with User through UserRole
-  @BelongsToMany(() => User, {
-    through: () => UserRole,
-    foreignKey: 'roleId',
-    otherKey: 'userId',
-    as: 'users',
+  @HasMany(() => Quotation, {
+    foreignKey: 'teamId',
+    as: 'quotations',
   })
-  users: User[];
+  quotations?: Quotation[];
+
+  @BelongsToMany(() => Player, {
+    through: () => Quotation,
+    foreignKey: 'teamId',
+    otherKey: 'playerId',
+    as: 'players',
+  })
+  players?: Player[];
+
+  isActiveTeam(): boolean {
+    return this.isActive;
+  }
 }
+
+

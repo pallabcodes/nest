@@ -13,6 +13,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { CacheInterceptor } from './common/cache/cache.interceptor';
 import configuration from './config/configuration';
+import { UserModule } from '@modules/user/user.module';
 
 @Module({
   imports: [
@@ -22,10 +23,11 @@ import configuration from './config/configuration';
       envFilePath: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env',
     }),
     LoggerModule,
+    DatabaseModule,
     CacheModule,
     HealthModule,
-    DatabaseModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

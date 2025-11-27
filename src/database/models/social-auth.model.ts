@@ -1,5 +1,4 @@
 import { Table, Column, Model, DataType, BelongsTo, CreatedAt } from 'sequelize-typescript';
-// Circular dependency prevention: Arrow function in @BelongsTo(() => User) defers evaluation
 import { User } from './user.model';
 
 export enum SocialProvider {
@@ -12,6 +11,16 @@ export enum SocialProvider {
   tableName: 'social_auths',
   timestamps: true,
   updatedAt: false,
+  indexes: [
+    {
+      fields: ['userId'],
+    },
+    {
+      fields: ['provider', 'providerId'],
+      unique: true,
+      name: 'unique_provider_identity',
+    },
+  ],
 })
 export class SocialAuth extends Model<SocialAuth> {
   @Column({

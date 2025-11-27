@@ -64,7 +64,7 @@ export class AppBootstrapService {
     const httpAdapter = this.app.getHttpAdapter();
     if (httpAdapter.getType() === 'express') {
       const expressApp = httpAdapter.getInstance();
-      expressApp.set('view engine', 'ejs');
+    expressApp.set('view engine', 'ejs');
     }
   }
 

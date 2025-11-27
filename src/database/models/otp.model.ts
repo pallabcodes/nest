@@ -11,6 +11,15 @@ export enum OtpType {
   tableName: 'otps',
   timestamps: true,
   updatedAt: false,
+  indexes: [
+    {
+      fields: ['code'],
+    },
+    {
+      fields: ['userId', 'type', 'isUsed', 'expiresAt'],
+      name: 'idx_otps_user_type_is_used_expires',
+    },
+  ],
 })
 export class Otp extends Model<Otp> {
   @Column({

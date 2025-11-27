@@ -6,13 +6,27 @@ import {
   CreatedAt,
   UpdatedAt,
   BelongsToMany,
+  HasMany,
+  HasOne,
 } from 'sequelize-typescript';
 import { Role } from './role.model';
 import { UserRole } from './user-role.model';
+import { Address } from './address.model';
+import { UserProfile } from './user-profile.model';
+import { Article } from './article.model';
 
 @Table({
   tableName: 'users',
   timestamps: true,
+  indexes: [
+    {
+      fields: ['email'],
+      unique: true,
+    },
+    {
+      fields: ['isActive'],
+    },
+  ],
 })
 export class User extends Model<User> {
   @Column({
@@ -34,7 +48,7 @@ export class User extends Model<User> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true, // Allow null for OAuth users who don't have passwords
+    allowNull: true,
   })
   password: string;
 
@@ -84,13 +98,37 @@ export class User extends Model<User> {
   })
   roles: Role[];
 
+  @HasMany(() => Address, {
+    foreignKey: 'userId',
+    as: 'addresses',
+  })
+  addresses?: Address[];
+
+  @HasOne(() => UserProfile, {
+    foreignKey: 'userId',
+    as: 'profile',
+  })
+  profile?: UserProfile;
+
+  @HasMany(() => Article, {
+    foreignKey: 'authorId',
+    as: 'authoredArticles',
+  })
+  authoredArticles?: Article[];
+
+  @HasMany(() => Article, {
+    foreignKey: 'editorId',
+    as: 'editedArticles',
+  })
+  editedArticles?: Article[];
+
   // Helper method to check if user has a specific role
   hasRole(roleName: string): boolean {
-    return this.roles?.some((role) => role.name === roleName) || false;
+    return this.roles?.some((role) => role.name === roleName);
   }
 
   // Helper method to check if user has any of the specified roles
   hasAnyRole(roleNames: string[]): boolean {
-    return this.roles?.some((role) => roleNames.includes(role.name)) || false;
+    return this.roles?.some((role) => roleNames.includes(role.name));
   }
 }

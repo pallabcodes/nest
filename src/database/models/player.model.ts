@@ -5,25 +5,25 @@ import {
   DataType,
   CreatedAt,
   UpdatedAt,
+  HasMany,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { User } from './user.model';
-import { UserRole } from './user-role.model';
+import { Team } from './team.model';
+import { Quotation } from './quotation.model';
 
 @Table({
-  tableName: 'roles',
+  tableName: 'players',
   timestamps: true,
   indexes: [
     {
       fields: ['name'],
-      unique: true,
     },
     {
       fields: ['isActive'],
     },
   ],
 })
-export class Role extends Model<Role> {
+export class Player extends Model<Player> {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -34,31 +34,24 @@ export class Role extends Model<Role> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
-    validate: {
-      len: [1, 100],
-    },
   })
   name: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    validate: {
-      len: [0, 500],
-    },
   })
-  description: string;
+  position: string;
 
   @Column({
-    type: DataType.JSON,
+    type: DataType.STRING,
     allowNull: true,
-    comment: 'Optional permissions metadata (e.g., ["users:read", "users:write"])',
   })
-  permissions: string[];
+  country: string;
 
   @Column({
     type: DataType.BOOLEAN,
+    allowNull: false,
     defaultValue: true,
   })
   isActive: boolean;
@@ -69,12 +62,23 @@ export class Role extends Model<Role> {
   @UpdatedAt
   declare updatedAt: Date;
 
-  // Many-to-Many association with User through UserRole
-  @BelongsToMany(() => User, {
-    through: () => UserRole,
-    foreignKey: 'roleId',
-    otherKey: 'userId',
-    as: 'users',
+  @HasMany(() => Quotation, {
+    foreignKey: 'playerId',
+    as: 'quotations',
   })
-  users: User[];
+  quotations?: Quotation[];
+
+  @BelongsToMany(() => Team, {
+    through: () => Quotation,
+    foreignKey: 'playerId',
+    otherKey: 'teamId',
+    as: 'teams',
+  })
+  teams?: Team[];
+
+  isActivePlayer(): boolean {
+    return this.isActive;
+  }
 }
+
+

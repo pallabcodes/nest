@@ -1,6 +1,22 @@
-// Central export point for all models to avoid circular dependencies
-// This pattern ensures models are imported consistently across the application
 export { User } from './user.model';
 export { Role } from './role.model';
 export { UserRole } from './user-role.model';
 export { Otp, OtpType } from './otp.model';
+export { Address } from './address.model';
+export { SocialAuth, SocialProvider } from './social-auth.model';
+export { Player } from './player.model';
+export { Team } from './team.model';
+export { Quotation, QuotationStatus } from './quotation.model';
+export { Auction } from './auction.model';
+export { QuotationHistory } from './quotation-history.model';
+export { UserProfile } from './user-profile.model';
+export { Category } from './category.model';
+export { Comment, CommentableType } from './comment.model';
+export { Article } from './article.model';
+export { Student } from './student.model';
+export { Teacher } from './teacher.model';
+export { Course } from './course.model';
+export { Department } from './department.model';
+export { Enrollment } from './enrollment.model';
+export { CourseTeacher } from './course-teacher.model';
+export { TeacherDepartment } from './teacher-department.model';

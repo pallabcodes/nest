@@ -40,7 +40,7 @@ export class TransactionUtil {
       operationName = 'unknown',
       retryOnDeadlock = false,
       maxRetries = 3,
-    } = options || {};
+    } = options ?? {};
 
     const startTime = Date.now();
     this.transactionMetrics.total++;

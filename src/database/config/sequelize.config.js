@@ -6,7 +6,7 @@ require('dotenv').config({ path: envFile });
 const dbDialect = (process.env.DB_DIALECT || 'mysql').toLowerCase();
 const isPostgres = dbDialect === 'postgres' || dbDialect === 'postgresql';
 const dialect = isPostgres ? 'postgres' : 'mysql';
-const defaultPort = isPostgres ? 5432 : 3306;
+const defaultPort = isPostgres ? 5432 : 3308;
 const defaultUsername = isPostgres ? 'postgres' : 'root';
 
 module.exports = {
@@ -38,4 +38,3 @@ module.exports = {
     logging: false,
   },
 };
-
