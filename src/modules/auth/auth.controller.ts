@@ -10,7 +10,6 @@ import {
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import type { Request, Response } from 'express';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
   RegisterDocs,
@@ -49,7 +48,7 @@ export class AuthController {
   @Public()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body(ValidationPipe) registerDto: RegisterDto, @Res({ passthrough: true }) res: Response) {
+  async register(@Body(ValidationPipe) registerDto: RegisterDto, @Res({ passthrough: true }) res: any) {
     const responseData = await this.authService.registerWithCookies(registerDto, res);
     return AuthResponsePresenter.register(responseData);
   }
@@ -58,7 +57,7 @@ export class AuthController {
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body(ValidationPipe) loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
+  async login(@Body(ValidationPipe) loginDto: LoginDto, @Res({ passthrough: true }) res: any) {
     const responseData = await this.authService.loginWithCookies(loginDto, res);
     return AuthResponsePresenter.login(responseData);
   }
@@ -117,7 +116,7 @@ export class AuthController {
   @Public()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  async refreshToken(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
+  async refreshToken(@Res({ passthrough: true }) res: any, @Req() req: any) {
     const result = await this.authService.refreshTokenFromRequest(req, res);
     return AuthResponsePresenter.refresh(result);
   }
@@ -135,7 +134,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
-  async logout(@Res({ passthrough: true }) res: Response) {
+  async logout(@Res({ passthrough: true }) res: any) {
     // Clear auth cookies
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');

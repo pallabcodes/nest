@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
 import { FileValidationService } from './services/file-validation.service';
+import type { UploadedFile } from '../../types/uploads';
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -50,7 +51,7 @@ export class FileStorageService {
     return `${timestamp}-${random}${ext}`;
   }
 
-  async saveFile(file: Express.Multer.File, subfolder: string = 'avatars'): Promise<string> {
+  async saveFile(file: UploadedFile, subfolder: string = 'avatars'): Promise<string> {
     try {
       this.validationService.validateFileSize(file.size);
 
@@ -86,7 +87,7 @@ export class FileStorageService {
     }
   }
 
-  async saveFiles(files: Express.Multer.File[], subfolder: string = 'avatars'): Promise<string[]> {
+  async saveFiles(files: UploadedFile[], subfolder: string = 'avatars'): Promise<string[]> {
     const savedPaths: string[] = [];
     const errors: Error[] = [];
 

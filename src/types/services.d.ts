@@ -8,6 +8,7 @@
 import type { AuthenticatedUser, LoginResponse, RegisterResponse, TokenPair } from './auth';
 import type { ServiceResponse, RepositoryResult } from './api';
 import type { CreateUserData, UpdateUserData } from './database';
+import type { UploadedFile } from './uploads';
 
 // Auth DTOs - Import types from auth module
 // These are class types, so we use InstanceType pattern or define interfaces
@@ -145,11 +146,11 @@ export interface BaseRepository<T> {
  */
 export interface FileUploadServiceInterface {
   uploadFile(
-    file: Express.Multer.File,
+    file: UploadedFile,
     options?: UploadOptions,
   ): Promise<ServiceResponse<FileUploadResult>>;
   uploadMultipleFiles(
-    files: Express.Multer.File[],
+    files: UploadedFile[],
     options?: UploadOptions,
   ): Promise<ServiceResponse<FileUploadResult[]>>;
   deleteFile(

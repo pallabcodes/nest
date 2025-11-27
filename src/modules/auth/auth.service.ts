@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { Response, Request } from 'express';
 import { AuthRepository } from './auth.repository';
 import { TokenService } from './services/token.service';
 import { OtpService } from './services/otp.service';
@@ -286,7 +285,7 @@ export class AuthService {
   /**
    * Refresh token from cookies
    */
-  async refreshTokenFromRequest(req: Request, res: Response) {
+  async refreshTokenFromRequest(req: any, res: any) {
     const refreshToken = req.cookies?.['refreshToken'];
     if (!refreshToken) {
       throw new RefreshTokenNotFoundException();
@@ -303,7 +302,7 @@ export class AuthService {
 
   // ============ PRIVATE HELPER METHODS ============
 
-  private _setAuthCookies(res: Response, tokens: any): void {
+  private _setAuthCookies(res: any, tokens: any): void {
     const accessConfig = AUTH_CONSTANTS.COOKIES.ACCESS_TOKEN;
     const refreshConfig = AUTH_CONSTANTS.COOKIES.REFRESH_TOKEN;
 

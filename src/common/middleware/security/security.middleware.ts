@@ -6,7 +6,6 @@ import {
   Inject,
   Optional,
 } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import { ConfigService } from '@nestjs/config';
 import { LoggerService } from '../../logger/logger.service';
@@ -47,7 +46,7 @@ export class SecurityMiddleware implements NestMiddleware {
     this.hstsMaxAge = securityConfig?.helmet?.hsts?.maxAge || 31536000;
   }
 
-  use(req: Request, res: Response, next: NextFunction) {
+  use(req: any, res: any, next: () => void) {
     // Apply Helmet security headers if enabled
     if (this.helmetEnabled) {
       this.applySecurityHeaders(req, res);
@@ -58,8 +57,8 @@ export class SecurityMiddleware implements NestMiddleware {
       this.logger?.warn('Rate limit exceeded', {
         ip: req.ip,
         url: req.url,
-        userAgent: req.get('user-agent'),
-        correlationId: req.correlationId,
+        userAgent: req.headers?.['user-agent'],
+        correlationId: (req as any).correlationId,
       });
 
       throw new HttpException(
@@ -81,7 +80,7 @@ export class SecurityMiddleware implements NestMiddleware {
     next();
   }
 
-  private applySecurityHeaders(req: Request, res: Response): void {
+  private applySecurityHeaders(req: any, res: any): void {
     const helmetOptions: any = {
       crossOriginEmbedderPolicy: false, // Allow embedding for API responses
     };
@@ -121,7 +120,7 @@ export class SecurityMiddleware implements NestMiddleware {
     res.removeHeader('X-Powered-By');
   }
 
-  private checkRateLimit(req: Request): boolean {
+  private checkRateLimit(req: any): boolean {
     const key = this.getRateLimitKey(req);
     const now = Date.now();
     const windowStart = now - this.windowMs;
@@ -143,7 +142,7 @@ export class SecurityMiddleware implements NestMiddleware {
     return true;
   }
 
-  private getRateLimitKey(req: Request): string {
+  private getRateLimitKey(req: any): string {
     // Use IP address for rate limiting
     // In production, you might want to use user ID for authenticated requests
     const user = req.user as any;
@@ -151,7 +150,7 @@ export class SecurityMiddleware implements NestMiddleware {
     return `rate_limit:${identifier}`;
   }
 
-  private sanitizeInput(req: Request): void {
+  private sanitizeInput(req: any): void {
     // Basic input sanitization
     if (req.body && typeof req.body === 'object') {
       this.sanitizeObject(req.body);

@@ -2,10 +2,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
-import { Request } from 'express';
 import { AuthRepository } from '../auth.repository';
 
-const cookieExtractor = (req: Request): string | null => {
+const cookieExtractor = (req: any): string | null => {
   if (req?.cookies) {
     return req.cookies['accessToken'] || null;
   }

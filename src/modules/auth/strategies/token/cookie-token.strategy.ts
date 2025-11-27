@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import {
   TokenResponseStrategy,
   TokenPair,
@@ -14,7 +13,7 @@ import {
 export class CookieTokenStrategy implements TokenResponseStrategy {
   constructor(private readonly options: CookieTokenOptions) {}
 
-  sendTokens(tokens: TokenPair, res: Response): void {
+  sendTokens(tokens: TokenPair, res: any): void {
     // Set access token cookie
     res.cookie(
       this.options.accessToken.name,
@@ -40,7 +39,7 @@ export class CookieTokenStrategy implements TokenResponseStrategy {
     );
   }
 
-  clearTokens(res: Response): void {
+  clearTokens(res: any): void {
     // Clear access token cookie
     res.clearCookie(this.options.accessToken.name);
 

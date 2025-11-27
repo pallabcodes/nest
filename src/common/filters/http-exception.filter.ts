@@ -7,7 +7,6 @@ import {
   Inject,
   Optional,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { ApiResponse, ValidationError } from '../dto/api-response.dto';
 import { LoggerService } from '../logger/logger.service';
 
@@ -21,7 +20,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const response = ctx.getResponse<any>();
     const request = ctx.getRequest();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -100,6 +99,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
       }
     }
 
-    response.status(status).json(errorResponse);
+    // Support both Express and Fastify style responses
+    if (typeof (response as any).json === 'function') {
+      (response as any).status(status).json(errorResponse);
+    } else if (typeof (response as any).send === 'function') {
+      (response as any).status(status).send(errorResponse);
+    } else if (typeof (response as any).end === 'function') {
+      (response as any).status(status).end(JSON.stringify(errorResponse));
+    }
   }
 }

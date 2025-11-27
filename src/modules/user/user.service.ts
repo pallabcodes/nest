@@ -3,6 +3,7 @@ import { UserRepository } from './user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileStorageService } from './file-storage.service';
+import type { UploadedFile } from '../../types/uploads';
 import { CacheService } from '../../common/cache/cache.service';
 import { Cache, CacheInvalidateByTags } from '../../common/cache/cache.decorators';
 import { User } from '../../database/models/user.model';
@@ -43,15 +44,15 @@ export class UserService {
     throw new Error('Not implemented');
   }
 
-  async updateAvatar(userId: number, file: Express.Multer.File): Promise<User> {
+  async updateAvatar(userId: number, file: UploadedFile): Promise<User> {
     throw new Error('Not implemented');
   }
 
-  async uploadFiles(files: Express.Multer.File[]): Promise<string[]> {
+  async uploadFiles(files: UploadedFile[]): Promise<string[]> {
     throw new Error('Not implemented');
   }
 
-  async uploadFilesLegacy(files: Express.Multer.File[]): Promise<string[]> {
+  async uploadFilesLegacy(files: UploadedFile[]): Promise<string[]> {
     throw new Error('Not implemented');
   }
 }

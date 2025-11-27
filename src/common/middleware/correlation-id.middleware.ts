@@ -1,16 +1,6 @@
 import { Injectable, NestMiddleware, Inject, Optional } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
 import { randomUUID } from 'crypto';
 import { LoggerService } from '../logger/logger.service';
-
-// Extend Express Request interface to include correlationId
-declare global {
-  namespace Express {
-    interface Request {
-      correlationId: string;
-    }
-  }
-}
 
 /**
  * Correlation ID Middleware
@@ -33,12 +23,12 @@ export class CorrelationIdMiddleware implements NestMiddleware {
     private readonly logger?: LoggerService,
   ) {}
 
-  use(req: Request, res: Response, next: NextFunction) {
+  use(req: any, res: any, next: () => void) {
     // Check if client provided a correlation ID, otherwise generate one
     const correlationId = (req.headers['x-correlation-id'] as string) || randomUUID();
 
     // Attach correlation ID to request object for use in controllers/services
-    req.correlationId = correlationId;
+    (req as any).correlationId = correlationId;
 
     // Set correlation ID in logger context for structured logging
     if (this.logger) {
@@ -57,7 +47,7 @@ export class CorrelationIdMiddleware implements NestMiddleware {
         correlationId,
         method: req.method,
         url: req.url,
-        userAgent: req.get('user-agent'),
+        userAgent: req.headers?.['user-agent'],
         ip: req.ip,
       });
     }

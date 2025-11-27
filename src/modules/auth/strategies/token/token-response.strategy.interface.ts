@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import { TokenPair } from '../auth/auth.strategy.interface';
 
 // Re-export TokenPair for convenience
@@ -14,12 +13,12 @@ export interface TokenResponseStrategy {
   /**
    * Send tokens in response
    */
-  sendTokens(tokens: TokenPair, res: Response): void | Promise<void>;
+  sendTokens(tokens: TokenPair, res: any): void | Promise<void>;
 
   /**
    * Clear tokens from response
    */
-  clearTokens(res: Response): void | Promise<void>;
+  clearTokens(res: any): void | Promise<void>;
 
   /**
    * Check if tokens are present in request
@@ -51,7 +50,7 @@ export interface TokenResponseOptions {
   strategy: TokenResponseStrategyType;
   cookieOptions?: CookieTokenOptions;
   headerOptions?: HeaderTokenOptions;
-  customHandler?: (tokens: TokenPair, res: Response) => void | Promise<void>;
+  customHandler?: (tokens: TokenPair, res: any) => void | Promise<void>;
 }
 
 /**

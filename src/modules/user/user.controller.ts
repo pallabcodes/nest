@@ -14,7 +14,6 @@ import {
   ParseIntPipe,
   ValidationPipe,
 } from '@nestjs/common';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import {
   ApiTags,
   ApiOperation,
@@ -33,7 +32,6 @@ import { Roles } from '@common/decorators/roles.decorator';
 import { Public } from '@common/decorators/public.decorator';
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { FileStorageService } from './file-storage.service';
-import * as multer from 'multer';
 
 @ApiTags('User')
 @Controller('users')
@@ -123,7 +121,7 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'Avatar uploaded successfully' })
   async uploadAvatar(
     @CurrentUser() currentUser: { id: number; email?: string; name?: string; roles?: string[] },
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: any,
   ) {
     return this.userService.updateAvatar(currentUser.id, file);
   }
@@ -133,7 +131,7 @@ export class UserController {
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Upload multiple files - Authenticated users only' })
   @ApiResponse({ status: 200, description: 'Files uploaded successfully' })
-  async uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
+  async uploadFiles(@UploadedFiles() files: any[]) {
     return this.userService.uploadFiles(files);
   }
 
@@ -143,7 +141,7 @@ export class UserController {
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: '[DEPRECATED] Upload multiple files - Use /users/files instead' })
   @ApiResponse({ status: 200, description: 'Files uploaded successfully' })
-  async uploadFilesLegacy(@UploadedFiles() files: Express.Multer.File[]) {
+  async uploadFilesLegacy(@UploadedFiles() files: any[]) {
     return this.userService.uploadFilesLegacy(files);
   }
 }

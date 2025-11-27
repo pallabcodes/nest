@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import { TokenResponseStrategy, TokenPair } from './token-response.strategy.interface';
 
 /**
@@ -8,12 +7,12 @@ import { TokenResponseStrategy, TokenPair } from './token-response.strategy.inte
  * This is the default strategy and works for most SPAs and mobile apps.
  */
 export class BodyTokenStrategy implements TokenResponseStrategy {
-  sendTokens(tokens: TokenPair, res: Response): void {
+  sendTokens(tokens: TokenPair, res: any): void {
     // Tokens are returned in response body by controller
     // This strategy doesn't modify the response directly
   }
 
-  clearTokens(res: Response): void {
+  clearTokens(res: any): void {
     // No action needed - tokens are in response body
   }
 

@@ -61,11 +61,7 @@ export class AppBootstrapService {
   }
 
   private setupViewEngine(): void {
-    const httpAdapter = this.app.getHttpAdapter();
-    if (httpAdapter.getType() === 'express') {
-      const expressApp = httpAdapter.getInstance();
-    expressApp.set('view engine', 'ejs');
-    }
+    // No-op: view engines are not used in this Fastify-based API application
   }
 
   private setupGlobalPipes(): void {
@@ -99,8 +95,9 @@ export class AppBootstrapService {
   private setupRootEndpoint(): void {
     // Setup root endpoint at / to return API information
     // This is outside the global prefix, so it handles requests to /
-    this.app.getHttpAdapter().get('/', (req, res) => {
-      res.json({
+    const httpAdapter = this.app.getHttpAdapter();
+    httpAdapter.get('/', (req: any, res: any) => {
+      const payload = {
         success: true,
         data: {
           message: 'Interview Sandbox API',
@@ -109,7 +106,16 @@ export class AppBootstrapService {
           api: '/api',
           health: '/api/health',
         },
-      });
+      };
+
+      // Support both Express and Fastify style responses
+      if (typeof res.json === 'function') {
+        res.json(payload);
+      } else if (typeof res.send === 'function') {
+        res.send(payload);
+      } else if (typeof res.end === 'function') {
+        res.end(JSON.stringify(payload));
+      }
     });
   }
 
