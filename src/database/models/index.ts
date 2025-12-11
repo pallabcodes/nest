@@ -20,3 +20,7 @@ export { Department } from './department.model';
 export { Enrollment } from './enrollment.model';
 export { CourseTeacher } from './course-teacher.model';
 export { TeacherDepartment } from './teacher-department.model';
+export { Order, OrderStatus, OrderType } from './order.model';
+export { OrderItem } from './order-item.model';
+export { Payment, PaymentStatus, PaymentProvider } from './payment.model';
+export { Subscription, SubscriptionStatus } from './subscription.model';

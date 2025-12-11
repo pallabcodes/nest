@@ -6,14 +6,9 @@ import {
   CreatedAt,
   UpdatedAt,
   BelongsToMany,
-  HasMany,
-  HasOne,
 } from 'sequelize-typescript';
 import { Role } from './role.model';
 import { UserRole } from './user-role.model';
-import { Address } from './address.model';
-import { UserProfile } from './user-profile.model';
-import { Article } from './article.model';
 
 @Table({
   tableName: 'users',
@@ -48,7 +43,7 @@ export class User extends Model<User> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: true, // Allow null for OAuth users who don't have passwords
   })
   password: string;
 
@@ -97,30 +92,6 @@ export class User extends Model<User> {
     as: 'roles',
   })
   roles: Role[];
-
-  @HasMany(() => Address, {
-    foreignKey: 'userId',
-    as: 'addresses',
-  })
-  addresses?: Address[];
-
-  @HasOne(() => UserProfile, {
-    foreignKey: 'userId',
-    as: 'profile',
-  })
-  profile?: UserProfile;
-
-  @HasMany(() => Article, {
-    foreignKey: 'authorId',
-    as: 'authoredArticles',
-  })
-  authoredArticles?: Article[];
-
-  @HasMany(() => Article, {
-    foreignKey: 'editorId',
-    as: 'editedArticles',
-  })
-  editedArticles?: Article[];
 
   // Helper method to check if user has a specific role
   hasRole(roleName: string): boolean {

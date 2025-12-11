@@ -14,6 +14,8 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { CacheInterceptor } from './common/cache/cache.interceptor';
 import configuration from './config/configuration';
 import { UserModule } from '@modules/user/user.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { BusinessExceptionFilter } from './common/filters/business-exception.filter';
 
 @Module({
   imports: [
@@ -28,25 +30,30 @@ import { UserModule } from '@modules/user/user.module';
     HealthModule,
     AuthModule,
     UserModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [
     AppResponsePresenter,
     {
       provide: APP_FILTER,
-      useClass: HttpExceptionFilter,
+      useClass: BusinessExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter, // global exception filter for all requests
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: TransformInterceptor,
+      useClass: TransformInterceptor, // global interceptor to transform any response before it goes to the client
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
+      useClass: LoggingInterceptor, // global interceptor to log the request and response
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
+      useClass: CacheInterceptor, // cache the response
     },
   ],
 })

@@ -83,5 +83,17 @@ export default () => {
         db: parseInt(process.env.REDIS_DB || '0', 10),
       },
     },
+    stripe: {
+      secretKey: process.env.STRIPE_SECRET_KEY || '',
+      webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
+      publicKey: process.env.STRIPE_PUBLIC_KEY || '',
+      defaultCurrency: (process.env.STRIPE_DEFAULT_CURRENCY || 'usd').toLowerCase(),
+      supportedCurrencies: (process.env.STRIPE_SUPPORTED_CURRENCIES || 'usd,gbp,inr')
+        .split(',')
+        .map((c) => c.trim().toLowerCase())
+        .filter((c) => c.length > 0),
+      successUrl: process.env.STRIPE_SUCCESS_URL || 'http://localhost:8000/payments/success',
+      cancelUrl: process.env.STRIPE_CANCEL_URL || 'http://localhost:8000/payments/cancel',
+    },
   };
 };

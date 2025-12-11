@@ -65,6 +65,20 @@ export class Course extends Model<Course> {
   credits: number;
 
   @Column({
+    type: DataType.BIGINT,
+    allowNull: true,
+    comment: 'Price in minor units (for example cents)',
+  })
+  price: number | null;
+
+  @Column({
+    type: DataType.STRING(10),
+    allowNull: true,
+    comment: 'Currency code for price, for example usd',
+  })
+  currency: string | null;
+
+  @Column({
     type: DataType.BOOLEAN,
     defaultValue: true,
   })

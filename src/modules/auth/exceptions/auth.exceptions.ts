@@ -1,4 +1,5 @@
-import { BadRequestException, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
+import { BusinessException } from '@common/exceptions/business.exception';
 
 /**
  * Custom Authentication Exceptions
@@ -6,38 +7,64 @@ import { BadRequestException, ConflictException, NotFoundException, Unauthorized
  * Domain-specific exceptions for better error handling and debugging
  */
 
-export class UserAlreadyExistsException extends ConflictException {
+export class UserAlreadyExistsException extends BusinessException {
   constructor(email: string) {
-    super(`User with email ${email} already exists`);
+    super({
+      errorCode: 'AUTH.USER_ALREADY_EXISTS',
+      statusCode: HttpStatus.CONFLICT,
+      message: `User with email ${email} already exists`,
+      details: { email },
+    });
   }
 }
 
-export class InvalidCredentialsException extends UnauthorizedException {
+export class InvalidCredentialsException extends BusinessException {
   constructor() {
-    super('Invalid email or password');
+    super({
+      errorCode: 'AUTH.INVALID_CREDENTIALS',
+      statusCode: HttpStatus.UNAUTHORIZED,
+      message: 'Invalid email or password',
+    });
   }
 }
 
-export class UserNotFoundException extends NotFoundException {
+export class UserNotFoundException extends BusinessException {
   constructor(identifier: string) {
-    super(`User not found: ${identifier}`);
+    super({
+      errorCode: 'AUTH.USER_NOT_FOUND',
+      statusCode: HttpStatus.NOT_FOUND,
+      message: `User not found: ${identifier}`,
+      details: { identifier },
+    });
   }
 }
 
-export class EmailAlreadyVerifiedException extends BadRequestException {
+export class EmailAlreadyVerifiedException extends BusinessException {
   constructor() {
-    super('Email is already verified');
+    super({
+      errorCode: 'AUTH.EMAIL_ALREADY_VERIFIED',
+      statusCode: HttpStatus.BAD_REQUEST,
+      message: 'Email is already verified',
+    });
   }
 }
 
-export class InvalidOtpException extends BadRequestException {
+export class InvalidOtpException extends BusinessException {
   constructor() {
-    super('Invalid or expired OTP code');
+    super({
+      errorCode: 'AUTH.INVALID_OTP',
+      statusCode: HttpStatus.BAD_REQUEST,
+      message: 'Invalid or expired OTP code',
+    });
   }
 }
 
-export class RefreshTokenNotFoundException extends UnauthorizedException {
+export class RefreshTokenNotFoundException extends BusinessException {
   constructor() {
-    super('Refresh token not found in request');
+    super({
+      errorCode: 'AUTH.REFRESH_TOKEN_NOT_FOUND',
+      statusCode: HttpStatus.UNAUTHORIZED,
+      message: 'Refresh token not found in request',
+    });
   }
 }
